@@ -8,7 +8,7 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
-let scores, roundScore, activePlayer, gamePlaying;
+let scores, roundScore, activePlayer, gamePlaying, max_score;
 let diceDOM = document.querySelector('.dice');
 
 window.onload = function()
@@ -19,6 +19,7 @@ window.onload = function()
 document.querySelector('.btn-roll').addEventListener('click', rollDice);
 document.querySelector('.btn-hold').addEventListener('click', holdScore);
 document.querySelector('.btn-new').addEventListener('click', initGame);
+document.querySelector('.btn-max').addEventListener('click', setScore);
 
 function rollDice()
 {
@@ -52,7 +53,7 @@ function holdScore()
         scores[activePlayer] += roundScore;
 
         // Check if player won the game
-        if(scores[activePlayer] >= 10){
+        if(scores[activePlayer] >= max_score){
             document.querySelector(`#name-${activePlayer}`).textContent = 'Winner!'; 
             document.querySelector(`.player-${activePlayer}-panel`).classList.add('winner');
             document.querySelector(`.player-${activePlayer}-panel`).classList.remove('active');
@@ -82,6 +83,7 @@ function initGame()
     scores = [0,0];
     roundScore = 0;
     activePlayer = 0;
+    max_score = 100;
     gamePlaying = true;
 
     diceDOM.style.display = 'none';
@@ -102,5 +104,11 @@ function initGame()
 
     document.querySelector(`.player-0-panel`).classList.add('active');
 
+
     // document.querySelector(`.btn-roll`).removeAttribute('disabled');
+}
+
+function setScore()
+{
+    max_score = document.querySelector('.max-score-input').value;
 }
